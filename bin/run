@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Adding lib to the lookup path so as to imitate the
+# common behavior of Ruby gems without requiring the program's
+# user to actually install a gem on their machine. Since this
+# script is a one-off, it seems courteous to not leave artifacts
+# like that to on the user's computer.
+#
+export RUBYLIB="$PWD/lib${RUBYLIB:+:$RUBYLIB}"
+ruby ./lib/data_grouping.rb $1 $2
