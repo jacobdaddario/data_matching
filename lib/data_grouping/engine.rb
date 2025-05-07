@@ -6,7 +6,11 @@ module DataGrouping
       raise ArgumentError, "Only allowed to access data files" if filename.match?(/(\.\. | ~ | -)/)
 
       homogenized_filename = filename.delete_suffix(".csv")
-      @filename = File.read(File.expand_path("../../data/#{homogenized_filename}.csv", __dir__))
+      # We could chunk this for memory efficiency, but given that the largest file is only
+      # ~ 2MB, it's an unneeded optimization right now. The smallest droplet on Digital Ocean
+      # runs with 512 MiB, so unless the files becoming considerably larger we have no reason
+      # to worry regardless of the execution environment.
+      @file_contents = File.read(File.expand_path("../../data/#{homogenized_filename}.csv", __dir__))
 
       @matcher = AVAILABLE_MATCHERS[matcher]
 
