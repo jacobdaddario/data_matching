@@ -6,7 +6,7 @@ module DataGrouping
       raise ArgumentError, "Only allowed to access data files" if filename.match?(/(\.\. | ~ | -)/)
 
       homogenized_filename = filename.delete_suffix(".csv")
-      @filename = File.read(File.join(__dir__, "..", "..", "data", "#{homogenized_filename}.csv"))
+      @filename = File.read(File.expand_path("../../data/#{homogenized_filename}.csv", __dir__))
 
       @matcher = AVAILABLE_MATCHERS[matcher]
 
