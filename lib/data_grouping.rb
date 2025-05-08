@@ -7,10 +7,10 @@ module DataGrouping
   # it lets me show off some Ruby metaprogramming. Most importantly,
   # it's completely safe since it takes no user input.
   AVAILABLE_MATCHERS = constants.filter_map do |constant|
-    identifier = constant.name[/(.*)Matcher/, 1]
+    identifier = constant.to_s[/(.*)Matcher/, 1]
     next nil if identifier.nil?
 
-    [identifier.downcase, constant]
+    [identifier.downcase, const_get(constant)]
   end.to_h
 end
 
