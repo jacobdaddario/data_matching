@@ -14,22 +14,21 @@ module DataGrouping
       # runs with 512 MiB, so unless the files becoming considerably larger we have no reason
       # to worry regardless of the execution environment.
       @file_contents = File.read(File.expand_path("../../data/#{homogenized_filename}.csv", __dir__))
+      @table = CSV.parse(@file_contents, headers: true)
 
-      @matcher = AVAILABLE_MATCHERS[matcher]
+      @matcher = AVAILABLE_MATCHERS[matcher].new(@table.headers)
 
       raise ArgumentError, "Must supply a valid matcher. Valid matchers are: #{AVAILABLE_MATCHERS.keys.join(",")}" if @matcher.nil?
     end
 
     def run
-      @table = CSV.parse(@file_contents, headers: true)
-
       @table.each_with_index do |row, i|
         next_index = i + 1
         report_progress(next_index)
         # If we're at the end of the table, no need check other rows
         break if i + 1 > @table.length
 
-        @table[next_index..].each {}
+        @table[next_index..].each { |compared_row| puts @matcher.match?(row, compared_row) }
       end
     end
 
