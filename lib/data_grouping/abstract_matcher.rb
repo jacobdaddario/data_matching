@@ -6,9 +6,13 @@ module DataGrouping
 
     def match?(source_row, compared_row)
       @checked_headers.any? do |header|
-        next if source_row[header].nil? || compared_row[header].nil?
+        next if source_row[header].nil?
 
-        normalize(source_row[header]) == normalize(compared_row[header])
+        @checked_headers.any? do |compared_header|
+          next if compared_row[compared_header].nil?
+
+          normalize(source_row[header]) == normalize(compared_row[compared_header])
+        end
       end
     end
 
