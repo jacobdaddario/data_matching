@@ -26,11 +26,21 @@ module DataGrouping
     def run
       @index = Index.new(@table, @matcher).build_index
 
+      # Need to establish the starting conditions
+      current_entry = { value: "" }
+
       @index.each_with_index do |entry, i|
         report_progress(i)
+
+        if @matcher.match?(current_entry[:value], entry[:value])
+          @table[entry[:table_index]]["id"] = @table[current_entry[:table_index]]["id"]
+        else
+          current_entry = entry
+          @table[current_entry[:table_index]]["id"] = SecureRandom.uuid if @table[current_entry[:table_index]]["id"].nil?
+        end
       end
 
-      output = @table.to_csv(write_headers: true)
+      puts output = @table.to_csv(write_headers: true)
     end
 
     private
