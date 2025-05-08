@@ -50,7 +50,10 @@ module DataGrouping
     end
 
     def report_progress(i)
-      puts "Processing index_entry #{i + 1}/#{@index.length}"
+      adjusted_index = i + 1
+      return unless adjusted_index % 1000 == 0 || @index.length < 1000
+
+      puts "Processing index_entry #{adjusted_index}/#{@index.length}"
     end
   end
 end
