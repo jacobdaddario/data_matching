@@ -5,13 +5,9 @@ module DataGrouping
     end
 
     def match?(source_row, compared_row)
-      @checked_headers.any? do |header|
-        next if source_row[header].nil?
-
-        @checked_headers.any? do |compared_header|
-          next if compared_row[compared_header].nil?
-
-          normalize(source_row[header]) == normalize(compared_row[compared_header])
+      scan_for_matches_on(row: source_row) do |source_value|
+        scan_for_matches_on(row: compared_row) do |compared_value|
+          normalize(source_value) == normalize(compared_value)
         end
       end
     end
@@ -24,6 +20,15 @@ module DataGrouping
 
     def normalize(value)
       raise NotImplementedError
+    end
+
+    def scan_for_matches_on(row:)
+      @checked_headers.any? do |header|
+        checked_value = row[header]
+        next if checked_value.nil?
+
+        yield checked_value
+      end
     end
   end
 end
