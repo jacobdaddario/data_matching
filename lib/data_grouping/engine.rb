@@ -1,5 +1,6 @@
 require "csv"
 require "securerandom"
+require "data_grouping/index"
 require "debug"
 
 module DataGrouping
@@ -23,35 +24,13 @@ module DataGrouping
     end
 
     def run
-      output = CSV.generate(write_headers: true, headers: @table.headers) do |output_csv|
-        @table.each_with_index do |row, i|
-          next_index = i + 1
-          report_progress(next_index)
+      @index = Index.new(@table, @matcher).build_index
 
-          # The row has already been tagged as duplicate if `id` isn't nil. No need
-          # for further checking
-          if !row["id"].nil?
-            output_csv << row
-            next
-          end
-
-          row["id"] = SecureRandom.uuid
-          output_csv << row
-
-          # If we're at the end of the table, no need check other rows
-          break if i + 1 > @table.length
-
-          # Oops, this isn't `n log n` like I thought. It's actually n^2, and really slow.
-          # Time to go to a sorting strategy like I originally planned to do so I can get
-          # n log n
-          # Tagging duplicate records
-          @table[next_index..].each do |compared_row|
-            compared_row["id"] = row["id"] if compared_row["id"].nil? && @matcher.match?(row, compared_row)
-          end
-        end
+      @index.each_with_index do |entry, i|
+        report_progress(i)
       end
 
-      puts output
+      output = @table.to_csv(write_headers: true)
     end
 
     private
@@ -70,8 +49,8 @@ module DataGrouping
       CSV.parse(adjusted_csv, headers: true)
     end
 
-    def report_progress(index)
-      puts "Processing row #{index}/#{@table.length}"
+    def report_progress(i)
+      puts "Processing index_entry #{i + 1}/#{@index.length}"
     end
   end
 end
