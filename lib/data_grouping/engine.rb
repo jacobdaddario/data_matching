@@ -1,7 +1,6 @@
 require "csv"
 require "securerandom"
 require "data_grouping/index"
-require "debug"
 
 module DataGrouping
   class Engine
