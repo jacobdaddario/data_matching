@@ -41,6 +41,9 @@ module DataGrouping
           # If we're at the end of the table, no need check other rows
           break if i + 1 > @table.length
 
+          # Oops, this isn't `n log n` like I thought. It's actually n^2, and really slow.
+          # Time to go to a sorting strategy like I originally planned to do so I can get
+          # n log n
           # Tagging duplicate records
           @table[next_index..].each do |compared_row|
             compared_row["id"] = row["id"] if compared_row["id"].nil? && @matcher.match?(row, compared_row)
