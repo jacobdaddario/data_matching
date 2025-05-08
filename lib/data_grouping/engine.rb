@@ -1,3 +1,6 @@
+require "csv"
+require "debug"
+
 module DataGrouping
   class Engine
     def initialize(filename:, matcher:)
@@ -18,7 +21,22 @@ module DataGrouping
     end
 
     def run
-      puts "I do nothing"
+      @table = CSV.parse(@file_contents, headers: true)
+
+      @table.each_with_index do |row, i|
+        next_index = i + 1
+        report_progress(next_index)
+        # If we're at the end of the table, no need check other rows
+        break if i + 1 > @table.length
+
+        @table[next_index..].each {}
+      end
+    end
+
+    private
+
+    def report_progress(index)
+      puts "Processing row #{index}/#{@table.length}"
     end
   end
 end
