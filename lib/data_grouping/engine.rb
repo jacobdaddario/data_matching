@@ -10,12 +10,12 @@ module DataGrouping
       # safe than sorry. This line tries to prevent malicious inputs from the user.
       raise ArgumentError, "Only allowed to access data files" if filename.match?(/(\.\. | ~ | -)/)
 
-      homogenized_filename = filename.delete_suffix(".csv")
+      @filename = filename.delete_suffix(".csv")
       # We could chunk this for memory efficiency, but given that the largest file is only
       # ~ 2MB, it's an unneeded optimization right now. The smallest droplet on Digital Ocean
       # runs with 512 MiB, so unless the files becoming considerably larger we have no reason
       # to worry regardless of the execution environment.
-      @file_contents = File.read(File.expand_path("../../data/#{homogenized_filename}.csv", __dir__))
+      @file_contents = File.read(File.expand_path("../../data/#{@filename}.csv", __dir__))
       @table = prepend_id_column(CSV.parse(@file_contents, headers: true))
 
       @matcher = AVAILABLE_MATCHERS[matcher].new(@table.headers)
@@ -40,7 +40,7 @@ module DataGrouping
         end
       end
 
-      puts output = @table.to_csv(write_headers: true)
+      File.write(File.expand_path("../../data/#{@filename}_result.csv", __dir__), @table.to_csv(write_headers: true))
     end
 
     private
