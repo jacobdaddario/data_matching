@@ -1,14 +1,13 @@
 require "csv"
 require "securerandom"
 require "data_grouping/index"
-require "debug"
 
 module DataGrouping
   class Engine
     def initialize(filename:, matcher:)
       # NOTE: Typically we'd only let trusted users run a script like this, but better
       # safe than sorry. This line tries to prevent malicious inputs from the user.
-      raise ArgumentError, "Only allowed to access data files" if filename.match?(/(\.\. | ~ | -)/)
+      raise ArgumentError, "Only allowed to access data files" if filename.match?(/(\.\.|~|-)/)
 
       @filename = filename.delete_suffix(".csv")
       # We could chunk this for memory efficiency, but given that the largest file is only
