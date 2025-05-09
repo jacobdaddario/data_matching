@@ -29,4 +29,11 @@ RSpec.describe DataGrouping::PhoneMatcher do
       end
     end
   end
+
+  describe "#normalize" do
+    it "removes non-digit characters from phone numbers" do
+      expect(subject.normalize("(555) 123-4567")).to eq("5551234567")
+      expect(subject.normalize("555.888.9999 ext 123")).to eq("5558889999123")
+    end
+  end
 end

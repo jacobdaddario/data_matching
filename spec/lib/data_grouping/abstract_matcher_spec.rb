@@ -11,6 +11,15 @@ RSpec.describe DataGrouping::AbstractMatcher do
     end
   end
 
+  describe "#normalize" do
+    let(:source_value) { "foo" }
+    let(:compared_value) { "bar" }
+
+    it "raises `NotImplementedError` when `#normalize` is not defined" do
+      expect { subject.match?(source_value, compared_value) }.to raise_error(NotImplementedError)
+    end
+  end
+
   describe "#match?" do
     let(:source_value) { "foo" }
     let(:compared_value) { "bar" }

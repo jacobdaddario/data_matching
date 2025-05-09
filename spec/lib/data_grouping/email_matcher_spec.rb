@@ -29,4 +29,10 @@ RSpec.describe DataGrouping::EmailMatcher do
       end
     end
   end
+
+  describe "#normalize" do
+    it "downcases email addresses" do
+      expect(subject.normalize("Foo@EXAMPLE.com")).to eq("foo@example.com")
+    end
+  end
 end

@@ -43,4 +43,18 @@ RSpec.describe DataGrouping::PhoneAndEmailMatcher do
       end
     end
   end
+
+  describe "#normalize" do
+    context "when value is a phone number" do
+      it "removes non-digit characters from phone numbers" do
+        expect(subject.normalize("(333) 222-1111")).to eq("3332221111")
+      end
+    end
+
+    context "when value is an email" do
+      it "downcases email addresses" do
+        expect(subject.normalize("Test@Example.com")).to eq("test@example.com")
+      end
+    end
+  end
 end
