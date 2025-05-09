@@ -52,12 +52,12 @@ bin/run example.csv phoneandemail # matches both
 
 ```mermaid
 erDiagram
-    ABSTRACT_MATCHER ||--|{ EMAIL_MATCHER : "inherits"
-    ABSTRACT_MATCHER ||--|{ PHONE_MATCHER : "inherits"
-    ABSTRACT_MATCHER ||--|{ PHONE_AND_EMAIL_MATCHER : "inherits"
-    ENGINE ||--|| INDEX : "has"
-    ENGINE ||--|| ABSTRACT_MATCHER : "uses"
-    INDEX ||--|| ABSTRACT_MATCHER : "uses"
+    AbstractMatcher ||--|{ EmailMatcher : "inherits"
+    AbstractMatcher ||--|{ PhoneMatcher : "inherits"
+    AbstractMatcher ||--|{ PhoneAndEmailMatcher : "inherits"
+    Engine ||--|| Index : "has"
+    Engine ||--|| AbstractMatcher : "uses"
+    Index ||--|| AbstractMatcher : "uses"
 ```
 
 ## Engine
