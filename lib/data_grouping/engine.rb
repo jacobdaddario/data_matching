@@ -42,6 +42,9 @@ module DataGrouping
         end
       end
 
+      # Have to assign the last chunk before exiting
+      assign_chunk(current_chunk)
+
       File.write(File.expand_path("../../data/#{@filename}_result.csv", __dir__), @table.to_csv(write_headers: true))
     end
 
