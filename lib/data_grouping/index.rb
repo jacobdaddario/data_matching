@@ -1,5 +1,7 @@
 module DataGrouping
   class Index
+    attr_reader :index
+
     def initialize(table, matcher)
       @table = table
       @matcher = matcher
