@@ -17,8 +17,7 @@ module DataGrouping
       @file_contents = File.read(File.expand_path("../../data/#{@filename}.csv", __dir__))
       @table = prepend_id_column(CSV.parse(@file_contents, headers: true))
 
-      @matcher = AVAILABLE_MATCHERS[matcher].new(@table.headers)
-
+      @matcher = AVAILABLE_MATCHERS[matcher]&.new(@table.headers)
       raise ArgumentError, "Must supply a valid matcher. Valid matchers are: #{AVAILABLE_MATCHERS.keys.join(",")}" if @matcher.nil?
     end
 
