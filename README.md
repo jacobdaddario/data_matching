@@ -48,6 +48,12 @@ bin/run example.csv email         # matches email addresses
 bin/run example.csv phoneandemail # matches both
 ```
 
+The spec suite for the application can be run with the following command.
+
+```sh
+bundle exec rspec
+```
+
 # Domain Concepts
 
 ```mermaid
