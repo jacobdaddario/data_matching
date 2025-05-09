@@ -5,10 +5,10 @@ module DataGrouping
     PHONE_NUMBER_REGEX = /\d{3}.*\d{3}.*\d{4}\z/
 
     def normalize(value)
-      if value.strip.match?(PHONE_NUMBER_REGEX)
+      if value&.strip&.match?(PHONE_NUMBER_REGEX)
         value.scan(/\d/).join
       else
-        value.downcase
+        value&.downcase
       end
     end
 

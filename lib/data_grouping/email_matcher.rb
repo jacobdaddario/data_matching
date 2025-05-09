@@ -3,7 +3,7 @@ require "data_grouping/abstract_matcher"
 module DataGrouping
   class EmailMatcher < AbstractMatcher
     def normalize(value)
-      value.downcase
+      value&.downcase
     end
 
     private
