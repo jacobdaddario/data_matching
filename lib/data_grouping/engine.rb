@@ -47,6 +47,7 @@ module DataGrouping
       @table.each { |row| row["id"] = SecureRandom.uuid if row["id"].nil? }
 
       File.write(File.expand_path("../../data/#{@filename}_result.csv", __dir__), @table.to_csv(write_headers: true))
+      @table
     end
 
     private
