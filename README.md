@@ -53,45 +53,10 @@ bin/run example.csv phoneandemail # matches both
 
 ```mermaid
 erDiagram
-    ABSTRACT_MATCHER {
-      +checked_headers: Array
-      +initialize(headers)
-      +match?(source_value, compared_value)
-      +is_blank?(value)
-      +header_regex()
-      +normalize(value)
-    }
-    EMAIL_MATCHER {
-      +header_regex()
-      +normalize(value)
-    }
-    PHONE_MATCHER {
-      +header_regex()
-      +normalize(value)
-    }
-    PHONE_AND_EMAIL_MATCHER {
-      +header_regex()
-      +normalize(value)
-    }
-    ENGINE {
-      +initialize(filename, matcher)
-      +run()
-      +prepend_id_column(table)
-      +report_progress(i)
-      +assign_chunk(chunk)
-      +determine_id(chunk)
-    }
-    INDEX {
-      +initialize(table, matcher)
-      +build_index()
-      +each_with_index()
-      +length()
-    }
-
-    EMAIL_MATCHER --|> ABSTRACT_MATCHER
-    PHONE_MATCHER --|> ABSTRACT_MATCHER
-    PHONE_AND_EMAIL_MATCHER --|> ABSTRACT_MATCHER
-    ENGINE o-- "1" INDEX : "has"
-    ENGINE o-- "1" ABSTRACT_MATCHER : "uses"
-    INDEX o-- "1" ABSTRACT_MATCHER : "uses"
+    ABSTRACT_MATCHER ||--|{ EMAIL_MATCHER : "inherits"
+    ABSTRACT_MATCHER ||--|{ PHONE_MATCHER : "inherits"
+    ABSTRACT_MATCHER ||--|{ PHONE_AND_EMAIL_MATCHER : "inherits"
+    ENGINE ||--|| INDEX : "has"
+    ENGINE ||--|| ABSTRACT_MATCHER : "uses"
+    INDEX ||--|| ABSTRACT_MATCHER : "uses"
 ```
