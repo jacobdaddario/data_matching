@@ -3,7 +3,7 @@ require "data_grouping/abstract_matcher"
 
 RSpec.describe DataGrouping::Index do
   let(:headers) { ["A"] }
-  let(:matcher) { instance_double(DataGrouping::AbstractMatcher, checked_headers: headers) } # Replace test double with actual matcher.
+  let(:matcher) { instance_double(DataGrouping::AbstractMatcher, checked_headers: headers) }
   let(:table) do
     [
       { "A" => "foo", "B" => "bar" },
@@ -17,6 +17,10 @@ RSpec.describe DataGrouping::Index do
       { table_index: 1, value: "baz" },
       { table_index: 2, value: "bar" },
     ]
+  end
+
+  before do
+    allow(matcher).to receive(:normalize) { |value| value }
   end
 
   subject { described_class.new(table, matcher) }
