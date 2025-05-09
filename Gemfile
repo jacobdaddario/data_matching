@@ -5,4 +5,5 @@ source "https://rubygems.org"
 # https://ruby.github.io/csv/
 gem "csv"
 gem "standard", require: false
+gem "rspec", require: false
 gem "debug", require: false
