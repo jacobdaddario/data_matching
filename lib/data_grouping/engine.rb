@@ -25,7 +25,7 @@ module DataGrouping
       @index = Index.new(@table, @matcher).build_index
 
       # Need to establish the starting conditions
-      current_entry = { value: "" }
+      current_entry = {value: ""}
       current_chunk = []
 
       @index.each_with_index do |entry, i|

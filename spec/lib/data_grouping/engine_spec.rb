@@ -70,5 +70,3 @@ RSpec.describe DataGrouping::Engine do
     end
   end
 end
-
-

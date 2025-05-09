@@ -6,16 +6,16 @@ RSpec.describe DataGrouping::Index do
   let(:matcher) { instance_double(DataGrouping::AbstractMatcher, checked_headers: headers) }
   let(:table) do
     [
-      { "A" => "foo", "B" => "bar" },
-      { "A" => "baz", "B" => nil },
-      { "A" => "bar",  "B" => "qux" }
+      {"A" => "foo", "B" => "bar"},
+      {"A" => "baz", "B" => nil},
+      {"A" => "bar", "B" => "qux"}
     ]
   end
   let(:expected_index) do
     [
-      { table_index: 0, value: "foo" },
-      { table_index: 1, value: "baz" },
-      { table_index: 2, value: "bar" },
+      {table_index: 0, value: "foo"},
+      {table_index: 1, value: "baz"},
+      {table_index: 2, value: "bar"}
     ]
   end
 
@@ -36,14 +36,14 @@ RSpec.describe DataGrouping::Index do
     context "when table rows have nil values" do
       let(:table) do
         [
-          { "A" => nil,  "B" => nil },
-          { "A" => "y", "B" => nil }
+          {"A" => nil, "B" => nil},
+          {"A" => "y", "B" => nil}
         ]
       end
       let(:expected_index) do
         [
-          { table_index: 1, value: "y" },
-          { table_index: 0, value: "" },
+          {table_index: 1, value: "y"},
+          {table_index: 0, value: ""}
         ]
       end
 
@@ -58,25 +58,25 @@ RSpec.describe DataGrouping::Index do
       let(:headers) { ["A", "B"] }
       let(:table) do
         [
-          { "A" => "apple", "B" => "xray" },
-          { "A" => "banana", "B" => "zulu" },
-          { "A" => "apple", "B" => "alpha" },
-          { "A" => "banana", "B" => "yankee" },
-          { "A" => "apricot", "B" => "charlie" }
+          {"A" => "apple", "B" => "xray"},
+          {"A" => "banana", "B" => "zulu"},
+          {"A" => "apple", "B" => "alpha"},
+          {"A" => "banana", "B" => "yankee"},
+          {"A" => "apricot", "B" => "charlie"}
         ]
       end
       let(:expected_index) do
         [
-          { table_index: 1, value: "zulu" },
-          { table_index: 3, value: "yankee" },
-          { table_index: 0, value: "xray" },
-          { table_index: 4, value: "charlie" },
-          { table_index: 1, value: "banana" },
-          { table_index: 3, value: "banana" },
-          { table_index: 4, value: "apricot" },
-          { table_index: 0, value: "apple" },
-          { table_index: 2, value: "apple" },
-          { table_index: 2, value: "alpha" }
+          {table_index: 1, value: "zulu"},
+          {table_index: 3, value: "yankee"},
+          {table_index: 0, value: "xray"},
+          {table_index: 4, value: "charlie"},
+          {table_index: 1, value: "banana"},
+          {table_index: 3, value: "banana"},
+          {table_index: 4, value: "apricot"},
+          {table_index: 0, value: "apple"},
+          {table_index: 2, value: "apple"},
+          {table_index: 2, value: "alpha"}
         ]
       end
 
@@ -86,7 +86,6 @@ RSpec.describe DataGrouping::Index do
         expect(index).to eq(expected_index)
       end
     end
-
   end
 
   describe "#each_with_index" do
@@ -117,8 +116,5 @@ RSpec.describe DataGrouping::Index do
 
       expect(index_double).to have_received(:length)
     end
-
   end
 end
-
-

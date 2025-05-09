@@ -12,7 +12,7 @@ module DataGrouping
       unsorted_index = []
       @table.each_with_index do |row, i|
         @matcher.checked_headers.each do |header|
-          unsorted_index << { table_index: i, value: @matcher.normalize(row[header]) || "" }
+          unsorted_index << {table_index: i, value: @matcher.normalize(row[header]) || ""}
         end
       end
 

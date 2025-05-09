@@ -24,7 +24,7 @@ RSpec.describe DataGrouping::PhoneAndEmailMatcher do
     context "when values are emails" do
       let(:source_value) { "Test@Example.com" }
       let(:compared_value) { "test@example.com" }
-      
+
       it "returns true if normalized emails are equal" do
         expect(subject.match?(source_value, compared_value)).to be true
       end
