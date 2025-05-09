@@ -12,6 +12,10 @@ module DataGrouping
       normalize(source_value) == normalize(compared_value)
     end
 
+    def normalize(value)
+      raise NotImplementedError
+    end
+
     private
 
     def is_blank?(value)
@@ -19,10 +23,6 @@ module DataGrouping
     end
 
     def header_regex
-      raise NotImplementedError
-    end
-
-    def normalize(value)
       raise NotImplementedError
     end
   end
