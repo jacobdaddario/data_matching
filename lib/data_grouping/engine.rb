@@ -1,6 +1,7 @@
 require "csv"
 require "securerandom"
 require "data_grouping/index"
+require "debug"
 
 module DataGrouping
   class Engine
@@ -35,7 +36,7 @@ module DataGrouping
         if @matcher.match?(current_entry[:value], entry[:value])
           current_chunk << entry
         else
-          assign_chunk(current_chunk)
+          assign_chunk(current_chunk) if current_chunk.length > 1
 
           current_entry = entry
           current_chunk = [entry]
@@ -43,7 +44,9 @@ module DataGrouping
       end
 
       # Have to assign the last chunk before exiting
-      assign_chunk(current_chunk)
+      assign_chunk(current_chunk) if current_chunk.length > 1
+      # Now, the only remaining rows have no matches and can be given unique IDs
+      @table.each { |row| row["id"] = SecureRandom.uuid if row["id"].nil? }
 
       File.write(File.expand_path("../../data/#{@filename}_result.csv", __dir__), @table.to_csv(write_headers: true))
     end
