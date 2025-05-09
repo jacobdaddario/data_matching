@@ -2,6 +2,7 @@ require "data_grouping/version"
 require "data_grouping/engine"
 require "data_grouping/email_matcher"
 require "data_grouping/phone_matcher"
+require "data_grouping/phone_and_email_matcher"
 
 module DataGrouping
   # This is entirely unnecessary. That said, it is nice to have, and
