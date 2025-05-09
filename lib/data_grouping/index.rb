@@ -14,7 +14,13 @@ module DataGrouping
         end
       end
 
-      @index = unsorted_index.sort_by { |entry| entry[:value]  }
+      # NOTE: For this algorithm to work, all rows that _can_ already have a match
+      # _must_ have a match before identifying the `nil` values. Therefore, `nil`
+      # values must be at the end of the index
+      @index = unsorted_index.sort do |first_entry, second_entry|
+        second_entry[:value] <=> first_entry[:value]
+      end
+
       self
     end
 
