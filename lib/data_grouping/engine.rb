@@ -27,18 +27,15 @@ module DataGrouping
 
       # Need to establish the starting conditions
       current_entry = { value: "" }
-      current_chunk = []
 
       @index.each_with_index do |entry, i|
         report_progress(i)
 
         if @matcher.match?(current_entry[:value], entry[:value])
-          current_chunk << entry
+          @table[entry[:table_index]]["id"] = @table[current_entry[:table_index]]["id"]
         else
-          assign_chunk(current_chunk)
-
           current_entry = entry
-          current_chunk = [entry]
+          @table[current_entry[:table_index]]["id"] = SecureRandom.uuid if @table[current_entry[:table_index]]["id"].nil?
         end
       end
 
@@ -66,31 +63,6 @@ module DataGrouping
       return unless adjusted_index % 1000 == 0 || @index.length < 1000
 
       puts "Processing index_entry #{adjusted_index}/#{@index.length}"
-    end
-
-    def assign_chunk(chunk)
-      id = determine_id(chunk)
-
-      # There's no overwriting concern here because we've already found
-      # the existing ID
-      chunk.each do |entry|
-        @table[entry[:table_index]]["id"] = id
-      end
-    end
-
-    def determine_id(chunk)
-      existing_id = nil
-
-      chunk.each do |entry|
-        entry_id = @table[entry[:table_index]]["id"]
-
-        if entry_id
-          existing_id = entry_id
-          break
-        end
-      end
-
-      existing_id || SecureRandom.uuid
     end
   end
 end
