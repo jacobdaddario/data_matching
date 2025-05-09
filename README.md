@@ -5,7 +5,6 @@
 This application was written with Ruby 3.4.1, and it is recommended to maintain the same version of Ruby when running the code locally. Ruby can be installed using your preferred version manager, or using `rbenv` with the command below.
 
 ```sh
-# Install Ruby 3.4.1
 rbenv install 3.4.1
 ```
 
